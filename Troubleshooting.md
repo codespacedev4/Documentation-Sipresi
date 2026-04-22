@@ -8,4 +8,4 @@ Kami sudah punya mekanisme auto start di dalam docker nya, jadi tidak perlu pani
 - jalankan perintah `ngrok http {port}`, maka server akan di forward oleh ngrok, kamu akan mendapatkan url, biasanya bentuk nya seperti ini `https://strongman-gratify-uneasily.ngrok-free.dev`.
 - lalu buka env frontend, biasanya ada dalam folder frontend, lalu ubah `VITE_API_URL`, isi dengan url yang didapati dari ngrok dengan `/api` di belakangnya, contoh `VITE_API_URL=https://strongman-gratify-uneasily.ngrok-free.dev/api`.
 - lalu jalankan perintah `git add .` dan `git push origin main`.
-- lalu kalian buka vercel web nya di chrome, masuk menu settings lalu ke environment variable, lalu set `VITE_API_URL` dengan url yang didapat dari ngrok.
+- lalu kalian buka vercel web nya di chrome, masuk menu settings lalu ke environment variable, lalu set key `VITE_API_URL` lalu value nya isi dengan url yang didapat dari ngrok.
