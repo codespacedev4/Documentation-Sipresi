@@ -154,20 +154,6 @@ flowchart TD
     Check -->|Tidak| End1([Selesai])
     Generate --> End2([Selesai])
 
-    %% Coloring
-    style Start fill:#e3f2fd,stroke:#1e88e5
-    style Input fill:#fffde7,stroke:#fbc02d
-    style Validate fill:#fff9c4,stroke:#fbc02d
-    style Insert fill:#fffde7,stroke:#fbc02d
-    style Publish fill:#ede7f6,stroke:#5e35b1
-    style Notify fill:#ede7f6,stroke:#5e35b1
-    style Warning fill:#ede7f6,stroke:#5e35b1
-    style Check fill:#fff9c4,stroke:#fbc02d
-    style Generate fill:#fff3e0,stroke:#fb8c00
-    style Response fill:#e8f5e9,stroke:#43a047
-    style End1 fill:#e8f5e9,stroke:#43a047
-    style End2 fill:#e8f5e9,stroke:#43a047
-    style Error fill:#ffebee,stroke:#e53935
 ```
 
 ## Flow Tindak Lanjut (Follow-up)
@@ -182,17 +168,6 @@ flowchart TD
     Validate -->|Valid| Update[Update transaction\nfollow_up_status]
     Update --> Notify[Notifikasi ke\npihak terkait]
     Update --> Response[Return success]
-
-    %% Coloring
-    style Start fill:#e3f2fd,stroke:#1e88e5
-    style Input fill:#fffde7,stroke:#fbc02d
-    style Auth fill:#fff9c4,stroke:#fbc02d
-    style Validate fill:#fff9c4,stroke:#fbc02d
-    style Update fill:#fffde7,stroke:#fbc02d
-    style Notify fill:#ede7f6,stroke:#5e35b1
-    style Response fill:#e8f5e9,stroke:#43a047
-    style Deny fill:#ffebee,stroke:#e53935
-    style Error fill:#ffebee,stroke:#e53935
 ```
 
 ## Flow Naik Kelas (Academic Year)
@@ -211,10 +186,6 @@ flowchart TD
     Class12 -->|Tidak| Next[Lanjut ke<br/>siswa berikutnya]
     Upgrade --> Next
     Delete --> Next
-
-    style Start fill:#e1f5fe
-    style Response fill:#e8f5e9
-    style Delete fill:#ffebee
 ```
 
 ## Quick Start
@@ -249,6 +220,22 @@ docker compose up
 # Jika pakai docker desktop langsung buka docker desktop nya, lalu run manual
 ```
 
+### Installation Frontend
+
+```bash
+# Clone repository
+git clone https://github.com/codespacedev4/Frontend-Sipresi.git
+cd Frontend-Sipresi
+
+# Install dependencies
+[npm install]
+
+# Setup environment
+VITE_API_URL=isi_url_backend_mu
+# Edit .env sesuai konfigurasi lokal
+
+```
+
 ### Environment Variables
 
 ```env
@@ -281,75 +268,4 @@ MYSQL_USER=root
 
 ```
 /api/{service}/v1/{endpoint}
-```
-
-### Authentication
-
-Semua endpoint (kecuali auth) memerlukan Bearer token:
-
-```http
-Authorization: Bearer <access_token>
-```
-
-### Services Overview
-
-```mermaid
-flowchart LR
-    subgraph Auth["Authorization"]
-        Login1["/login-teacher"]
-        Login2["/login-user"]
-        Logout["/logout"]
-        Refresh["/refresh-token"]
-    end
-
-    subgraph Core["Core Services"]
-        User["/api/user"]
-        Teacher["/api/teacher"]
-        Student["/api/student"]
-        Class["/api/class"]
-    end
-
-    subgraph Catalog["Catalog"]
-        Violation["/api/violation"]
-        Achievement["/api/achievement"]
-        Warning["/api/warning"]
-    end
-
-    subgraph Transaction["Transaction"]
-        SPT["/api/student-point-transaction"]
-        SW["/api/student-warning"]
-        Notif["/api/notification"]
-    end
-
-    subgraph System["System"]
-        AY["/api/academic-year"]
-    end
-
-    Auth --> Core
-    Core --> Transaction
-    Catalog --> Transaction
-    Transaction --> System
-```
-
-| Service                   | Base Path                        | Deskripsi                    |
-| ------------------------- | -------------------------------- | ---------------------------- |
-| Authorization             | `/api/authorization`             | Login, logout, refresh token |
-| User                      | `/api/user`                      | Manajemen pengguna           |
-| Teacher                   | `/api/teacher`                   | Manajemen guru & walas       |
-| Student                   | `/api/student`                   | Manajemen siswa              |
-| Class                     | `/api/class`                     | Manajemen kelas              |
-| Violation                 | `/api/violation`                 | Katalog pelanggaran          |
-| Achievement               | `/api/achievement`               | Katalog prestasi             |
-| Student Point Transaction | `/api/student-point-transaction` | Transaksi poin & statistik   |
-| Warning                   | `/api/warning`                   | Katalog peringatan           |
-| Student Warning           | `/api/student-warning`           | Surat peringatan siswa       |
-| Notification              | `/api/notification`              | Notifikasi pengguna          |
-| Academic Year             | `/api/academic-year`             | Tahun ajaran                 |
-
-## License
-
-[MIT/Apache/etc.] © [Luthfi/Codespace-Dev]
-
-```
-
 ```
