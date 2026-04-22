@@ -228,7 +228,7 @@ git clone https://github.com/codespacedev4/Frontend-Sipresi.git
 cd Frontend-Sipresi
 
 # Install dependencies
-[npm install]
+[npm install & npm run build]
 
 # Setup environment
 VITE_API_URL=isi_url_backend_mu
