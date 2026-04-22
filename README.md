@@ -139,43 +139,60 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    Start(User melaporkan) --> Input[POST /v1/report<br/>{student_ids, violation_id, note}]
+    Start([User melaporkan\npelanggaran]) --> Input[POST /v1/report\nstudent_ids, violation_id, note]
     Input --> Validate{Validasi?}
-    Validate -->|Invalid| Error[Return error<br/>partial success]
-    Validate -->|Valid| Insert[Insert transaction<br/>ke database]
-    Insert --> Publish[Publish event<br/>'report.success']
-    Insert --> Response[Return success<br/>response]
+    Validate -->|Invalid| Error[Return error\npartial success]
+    Validate -->|Valid| Insert[Insert transaction\nke database]
+    Insert --> Publish[Publish event\nreport.success]
+    Insert --> Response[Return success\nresponse]
 
-    Publish --> Notify[Notification Service<br/>buat notifikasi]
-    Publish --> Warning[Student Warning Service<br/>evaluasi poin]
+    Publish --> Notify[Notification Service\nbuat notifikasi]
+    Publish --> Warning[Student Warning Service\nevaluasi poin]
 
-    Warning --> Check{Total poin ><br/>threshold warning?}
-    Check -->|Ya| Generate[Generate surat<br/>peringatan]
+    Warning --> Check{Total poin > threshold warning?}
+    Check -->|Ya| Generate[Generate surat\nperingatan]
     Check -->|Tidak| End1([Selesai])
     Generate --> End2([Selesai])
 
-    style Start fill:#e1f5fe
-    style Error fill:#ffebee
-    style Response fill:#e8f5e9
-    style Generate fill:#fff3e0
+    %% Coloring
+    style Start fill:#e3f2fd,stroke:#1e88e5
+    style Input fill:#fffde7,stroke:#fbc02d
+    style Validate fill:#fff9c4,stroke:#fbc02d
+    style Insert fill:#fffde7,stroke:#fbc02d
+    style Publish fill:#ede7f6,stroke:#5e35b1
+    style Notify fill:#ede7f6,stroke:#5e35b1
+    style Warning fill:#ede7f6,stroke:#5e35b1
+    style Check fill:#fff9c4,stroke:#fbc02d
+    style Generate fill:#fff3e0,stroke:#fb8c00
+    style Response fill:#e8f5e9,stroke:#43a047
+    style End1 fill:#e8f5e9,stroke:#43a047
+    style End2 fill:#e8f5e9,stroke:#43a047
+    style Error fill:#ffebee,stroke:#e53935
 ```
 
 ## Flow Tindak Lanjut (Follow-up)
 
 ```mermaid
 flowchart TD
-    Start([Walas melakukan<br/>tindak lanjut]) --> Input[POST /v1/:id/follow-up<br/>{note, status}]
-    Input --> Auth{Auth: walas/admin?}
+    Start([Walas melakukan\ntindak lanjut]) --> Input[POST /v1/:id/follow-up\nnote, status]
+    Input --> Auth{Auth walas/admin?}
     Auth -->|Tidak| Deny[403 Forbidden]
-    Auth -->|Ya| Validate{Status valid?<br/>resolved / escalated}
+    Auth -->|Ya| Validate{Status valid?\nresolved atau escalated}
     Validate -->|Invalid| Error[Return error]
-    Validate -->|Valid| Update[Update transaction<br/>follow_up_status]
-    Update --> Notify[Notifikasi ke<br/>pihak terkait]
+    Validate -->|Valid| Update[Update transaction\nfollow_up_status]
+    Update --> Notify[Notifikasi ke\npihak terkait]
     Update --> Response[Return success]
 
-    style Start fill:#e1f5fe
-    style Deny fill:#ffebee
-    style Response fill:#e8f5e9
+    %% Coloring
+    style Start fill:#e3f2fd,stroke:#1e88e5
+    style Input fill:#fffde7,stroke:#fbc02d
+    style Auth fill:#fff9c4,stroke:#fbc02d
+    style Validate fill:#fff9c4,stroke:#fbc02d
+    style Update fill:#fffde7,stroke:#fbc02d
+    style Notify fill:#ede7f6,stroke:#5e35b1
+    style Response fill:#e8f5e9,stroke:#43a047
+    style Deny fill:#ffebee,stroke:#e53935
+    style Error fill:#ffebee,stroke:#e53935
 ```
 
 ## Flow Naik Kelas (Academic Year)
