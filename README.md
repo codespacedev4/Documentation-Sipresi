@@ -23,54 +23,6 @@ Sistem manajemen poin pelanggaran dan prestasi siswa untuk sekolah. Mengelola da
 - **Message Broker:** [Redis] — untuk event-driven services
 - **Export:** Excel report generation
 
-## Arsitektur Sistem
-
-```mermaid
-flowchart TB
-    subgraph Client
-        Web["Web App"]
-        Mobile["Mobile App"]
-    end
-
-    subgraph API["API Gateway / Load Balancer"]
-        REST["REST API"]
-    end
-
-    subgraph Services["Microservices"]
-        Auth["authorization"]
-        User["user"]
-        Teacher["teacher"]
-        Student["student"]
-        Class["class"]
-        Violation["violation"]
-        Achievement["achievement"]
-        Transaction["student-point-transaction"]
-        Warning["warning"]
-        StudentWarning["student-warning"]
-        Notification["notification"]
-        AcademicYear["academic-year"]
-    end
-
-    subgraph Events["Event Bus (Pub/Sub)"]
-        EB["Message Broker"]
-    end
-
-    subgraph Storage["Storage Layer"]
-        DB[("PostgreSQL")]
-        FS["File Storage<br/>(Excel Upload)"]
-    end
-
-    Client --> API
-    REST --> Services
-    Services --> DB
-    Teacher --> FS
-    Student --> FS
-    Services -.->|publish/subscribe| EB
-    EB -.->|trigger| Notification
-    EB -.->|trigger| StudentWarning
-    EB -.->|trigger| Student
-```
-
 ## Event-Driven Flow
 
 ```mermaid
@@ -145,7 +97,7 @@ sequenceDiagram
     participant RT as Refresh Tokens Table
 
     %% Login
-    rect rgb(230, 245, 255)
+    rect rgb(38, 1, 85)
         Note over C,RT: Login Flow
         C->>A: POST /v1/login-teacher<br/>{nip, password}
         A->>DB: Validasi NIP & password
@@ -156,7 +108,7 @@ sequenceDiagram
     end
 
     %% Authenticated Request
-    rect rgb(255, 245, 230)
+    rect rgb(37, 0, 107)
         Note over C,RT: Authenticated Request
         C->>A: Request dengan<br/>Authorization: Bearer <token>
         A->>A: Validasi JWT
@@ -164,7 +116,7 @@ sequenceDiagram
     end
 
     %% Token Refresh
-    rect rgb(230, 255, 230)
+    rect rgb(1, 2, 75)
         Note over C,RT: Token Refresh
         C->>A: POST /v1/refresh-token<br/>{refresh_token}
         A->>RT: Validasi refresh_token
@@ -175,7 +127,7 @@ sequenceDiagram
     end
 
     %% Logout
-    rect rgb(255, 230, 230)
+    rect rgb(39, 0, 75)
         Note over C,RT: Logout
         C->>A: POST /v1/logout<br/>{refresh_token}
         A->>RT: Revoke refresh_token
