@@ -139,7 +139,7 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    Start([User melaporkan<br/>pelanggaran]) --> Input[POST /v1/report<br/>{student_ids, violation_id, note}]
+    Start(User melaporkan) --> Input[POST /v1/report<br/>{student_ids, violation_id, note}]
     Input --> Validate{Validasi?}
     Validate -->|Invalid| Error[Return error<br/>partial success]
     Validate -->|Valid| Insert[Insert transaction<br/>ke database]
